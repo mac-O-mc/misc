@@ -13,6 +13,10 @@ const BrightGreen = "\x03"
 const Orange = "\x04"
 const OliveGreen = "\x05"
 
+PrecacheModel(zoey_model.tostring())
+PrecacheModel(francis_model.tostring())
+PrecacheModel(louis_model.tostring())
+
 // == These are just so the script won't run again, apparently it reruns itself again when survival mode itself starts ==
 function HasScriptAlreadyRan()
 {
@@ -41,9 +45,10 @@ function SetupL4D1Survivors()
 		EntFire(l4d1survivor_spawn.GetName(),"SpawnSurvivor"); */
 
 	local l4d1survivor_relay = null;
-	while( l4d1survivor_relay = Entities.FindByName(l4d1survivor_relay, "l4d1_survivors_relay" ))
-		EntFire(l4d1survivor_spawn.GetName(),"Enable");
-		DoEntFire(l4d1survivor_spawn.GetName(),"Trigger", null, 0.1, null, null);
+	while( l4d1survivor_relay = Entities.FindByName(l4d1survivor_relay, "l4d1_survivors_relay" )) {
+		EntFire(l4d1survivor_relay.GetName(),"Enable");
+		DoEntFire(l4d1survivor_relay.GetName(),"Trigger", null, 0.1, null, null);
+	}
 }
 // This needs a delay, as spawning l4d1 survivors takes some time
 //// Isn't actualy just teleporting as it also setups Louis's minigun
@@ -107,16 +112,16 @@ function SetupL4D1SurvivorsLoot()
 	}
 }
 
-function FireAllL4D1SurvivorRelated(testing)
+function FireAllL4D1SurvivorRelated()
 {
-	SetupL4D1Survivors(testing);
-	SetupL4D1SurvivorsLoot(testing);
-	SpawnScriptRanEntity(testing);
+	g_MapScript.SetupL4D1Survivors();
+	g_MapScript.SetupL4D1SurvivorsLoot();
+	g_MapScript.SpawnScriptRanEntity();
 //	Left4Timers.AddTimer(null, 0.1, TeleportL4D1Survivors, null, false);
 }
 
 if( !AlreadyRan ) {
-	Left4Timers.AddTimer(null, 0.6, FireAllL4D1SurvivorRelated, {testing = "null"}, false);
+	Left4Timers.AddTimer(null, 0.3, function(params){g_MapScript.FireAllL4D1SurvivorRelated()}, {}, false);
 	AlreadyRan <- true;
 }
 
