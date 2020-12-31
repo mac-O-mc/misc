@@ -3,7 +3,7 @@
 
 //------------------------------------------------------------------------------------------------------
 printl("Running c6m3_port_survival.nut;macky's addon script")
-// IncludeScript( "left4bots_timers.nut" )	// quite a solid timer system; Auto deletes timers. Only annoyance is how the params system works. I fucking hate it, won't let me do functions without params
+IncludeScript( "left4bots_timers.nut" )	// quite a solid timer system; Auto deletes timers. Only annoyance is how the params system works. I fucking hate it, won't let me do functions without params
 
 const zoey_model = "models/survivors/survivor_teenangst.mdl"
 const francis_model = "models/survivors/survivor_biker.mdl"
@@ -14,7 +14,7 @@ const Orange = "\x04"
 const OliveGreen = "\x05"
 
 // == These are just so the script won't run again, apparently it reruns itself again when survival mode itself starts ==
-local function HasScriptAlreadyRan()
+function HasScriptAlreadyRan()
 {
 	local info_target_scriptran;
 	if( info_target_scriptran = Entities.FindByName(info_target_scriptran, "info_target_scriptran"))
@@ -23,7 +23,7 @@ local function HasScriptAlreadyRan()
 		return false;
 }
 AlreadyRan <- HasScriptAlreadyRan();
-local function SpawnScriptRanEntity()
+function SpawnScriptRanEntity()
 {
 	local info_target_scriptran;
 	if( !info_target_scriptran = Entities.FindByName(info_target_scriptran, "info_target_scriptran"))
