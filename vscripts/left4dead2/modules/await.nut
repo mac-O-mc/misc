@@ -40,7 +40,7 @@ if (!("Await" in getroottable()))
 			goalTime = goalTime;
 		}
 
-		if(!::Await.CoroutineTasks._newslot) {
+		if(!::Await.CoroutineTasks._newslot == null) {
 			::Await.CoroutineTasks._newslot <- function()
 			{	
 				::Await.CoroutineTasks
