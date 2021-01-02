@@ -23,6 +23,12 @@ if (!("Await" in getroottable()))
 
 	::Await.Delay <- function(seconds, func)
 	{	
+		if(!::Await.CoroutineTasks._newslot) {
+			::Await.CoroutineTasks._newslot <- function()
+			{	
+				printl("_newslot metamethod gottem")
+			}
+		}	
 		if(type(seconds) == "integer" || type(seconds) == "float")
 			throw "Bad argument #1 to Await.Delay; Value was not integer or float.";
 		// If seconds is less than 1 / 100, assume seconds is 1 / 100.
@@ -39,13 +45,6 @@ if (!("Await" in getroottable()))
 			beginTime = createTime,
 			goalTime = goalTime;
 		}
-
-		if(!::Await.CoroutineTasks._newslot == null) {
-			::Await.CoroutineTasks._newslot <- function()
-			{	
-				::Await.CoroutineTasks
-			}
-		}	
 
 		CoroutineTasks <- tasknode;
 	//	CoroutineTasks <- [coroutine, seconds, CreatedTime];  // does this array format really work?
