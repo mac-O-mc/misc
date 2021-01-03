@@ -3,6 +3,7 @@
 
 //------------------------------------------------------------------------------------------------------
 // Script keeps randomly crashing the game, I already planned to ditch this script as its taking a toll on my life, anyways
+//// If you need an alternative, use Survivor Bots Holdout, a sourcemod plugin
 printl("Running c6m3_port_survival.nut;macky's addon script")
 // IncludeScript( "left4bots_timers.nut" )	// quite a solid timer system; Auto deletes timers. Only annoyance is how the params system works; Hard to do functions without params
 //IncludeScript("modules/await.nut")
