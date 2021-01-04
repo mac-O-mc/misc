@@ -12,25 +12,41 @@ const BrightGreen = "\x03"
 const Orange = "\x04"
 const OliveGreen = "\x05"
 
-if (!("Await" in getroottable()))
-{
+//if (!("Await" in getroottable()))
+//{
 	printl("Loading module: Await.nut")
 	::Await <-
 	{
 	//	ThinkEnt = null	// Model #2 version
-		CoroutineTasks = {}
+		CoroutineTasks = {
+			_newslot = null
+		}
+	}
+	
+	class AwaitRequest 
+	{
+		//constructor
+		constructor(coroutine, seconds, createTime = Time())
+		{
+			coroutine = null,
+			beginTime = createTime,
+			goalTime = createTime + seconds,
+		}
 	}
 
 	::Await.Delay <- function(seconds, func)
 	{	
 		if(!::Await.CoroutineTasks._newslot) {
-			::Await.CoroutineTasks._newslot <- function()
+			ClientPrint(null, DirectorScript.HUD_PRINTTALK, OliveGreen+"Creating _newslot function for ::Await.CoroutineTasks, will become metamethod!")
+			::Await.CoroutineTasks._newslot = function (key, val)
 			{	
 				printl("_newslot metamethod gottem")
+				printl(type(key))
 			}
-		}	
-		if(type(seconds) == "integer" || type(seconds) == "float")
-			throw "Bad argument #1 to Await.Delay; Value was not integer or float.";
+		}
+		if(!type(seconds) == "integer" && !type(seconds) == "float")
+			ClientPrint(null, DirectorScript.HUD_PRINTTALK, Beign+"Bad argument #1 to ::Await.Delay; Value was not integer or float.")
+			return false;
 		// If seconds is less than 1 / 100, assume seconds is 1 / 100.
 		// Think functions rethink every 100 ms
 		if (!seconds >= 1 / 100) // || seconds == RAND_MAX
@@ -38,12 +54,12 @@ if (!("Await" in getroottable()))
 			
 		local coroutine = newthread(func);
 		local createTime = Time();
-		local goalTime = startTime + seconds
+		local goalTime = createTime + seconds;
 		
 		local tasknode = {
 			coroutine = newthread(func),
 			beginTime = createTime,
-			goalTime = goalTime;
+			goalTime = goalTime,
 		}
 
 		CoroutineTasks <- tasknode;
@@ -51,8 +67,13 @@ if (!("Await" in getroottable()))
 	//	CoroutineTasks <- {coroutine = coroutine, seconds = seconds, CreatedTime = Time()};
 	}
 
+	::Await.AndThen <- function(seconds, func)
+	{	
+		
+	}
+
 	// for a different model
-	/* ::Await.ThinkFunc <- function()
+/* 	::Await.ThinkFunc <- function()
 	{
 		local cur_time = Time();
 		
@@ -64,18 +85,18 @@ if (!("Await" in getroottable()))
 			if ((curtime - coroutine.CreatedTime) >= coroutine.seconds)
 			{
 				// no real code yet
-				/* try
-				{
-					timer.Func(timer.params);
-				}
-				catch(exception)
-				{
-					printl("Await.ThinkFunc - Exception occured!");
-					printl(Orange+"EXCEPTION:"+exception);
-				} */
+				// try
+				// {
+					// timer.Func(timer.params);
+				// }
+				// catch(exception)
+				// {
+					// printl("Await.ThinkFunc - Exception occured!");
+					// printl(Orange+"EXCEPTION:"+exception);
+				// }
 			}
 		}
 	} */
-}
-else
-	ClientPrint(null, DirectorScript.HUD_PRINTTALK, Orange+"Await.nut attempting to load, when an 'Await' module already is loaded?")
+// }
+// else
+	// ClientPrint(null, DirectorScript.HUD_PRINTTALK, Orange+"Await.nut attempting to load, when an 'Await' module already is loaded?")
