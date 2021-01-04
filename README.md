@@ -1,2 +1,2 @@
 # misc
-various misc things I kinda assisted in its creation
+dump of various misc things I kinda assisted in its creation
