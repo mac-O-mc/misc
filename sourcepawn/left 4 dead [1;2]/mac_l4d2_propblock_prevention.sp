@@ -21,9 +21,17 @@ public Plugin myinfo =
 
 public void OnPluginStart()
 {
-	PrecacheModel("models/props_fortifications/traffic_barrier001.mdl", false);
-	ManualPropBlockPrevention();
-	CheckpointPropBlockPrevention();
+	char mapname[32];
+	if(GetCurrentMap(mapname,sizeof(mapname) > 0))
+	{
+		PrecacheModel("models/props_fortifications/traffic_barrier001.mdl", false);
+		ManualPropBlockPrevention();
+		CheckpointPropBlockPrevention();
+	}
+	else
+	{
+		PrintToServer("Hey Nick, that was my ass you shot. (Propblock plugin started when there's no map right now)");
+	}
 }
 
 public void OnMapStart()
